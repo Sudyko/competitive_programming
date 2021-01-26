@@ -22,18 +22,14 @@ int main() {
         cities.push_back(make_pair(num, i + 1));
     }
     sort(cities.begin(), cities.end());
-    int q;
-    scanf_s("%d", &q);
-    vector<int> result;
-    for (int i = 0; i < q; ++i) {
+    
+    scanf_s("%d", &n);
+    for (int i = 0; i < n; ++i) {
         int l, r, x;
         scanf_s("%d %d %d", &l, &r, &x);
         int left_bound = lower_bound(cities.begin(), cities.end(), make_pair(x, l), comp) - cities.begin();
         int right_bound = upper_bound(cities.begin(), cities.end(), make_pair(x, r), comp) - cities.begin();
-        result.push_back(left_bound < right_bound);
-    }
-    for (int i = 0; i < q; ++i) {
-        printf("%d", result[i]);
+        printf("%d", left_bound < right_bound);
     }
     return 0;
 }
