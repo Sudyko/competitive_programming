@@ -1,58 +1,64 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
-
-#define MAXN 1000000000
+#include <stack>
 
 using namespace std;
 
 struct Segment {
-	long x1, x2;
-	int pos;
-
-	int GetLength() {
-		return x2 - x1;
-	}
+	int x1, x2;
 };
 
-bool in_line(Segment& v, long& point) {
-	if (point >= v.x1 && point <= v.x2)
-		return true;
-	return false;
-}
-
 int main() {
-	vector<Segment> lines;
-	long n;
-	scanf_s("%ld", &n);
-	for (int i = 0; i < n; ++i) {
-		Segment line;
-		line.pos = i + 1;
-		scanf_s("%ld %ld", &line.x1, &line.x2);
-		lines.push_back(line);
+	int n;
+	int cur_seg = 1;
+	stack<int> stack;
+	scanf_s("%d", &n);
+	vector<Segment> segments(n + 1);
+	for (int i = 1; i < n + 1; ++i) {
+		Segment s;
+		scanf_s("%d %d", &s.x1, &s.x2);
+		segments[i] = s;
 	}
-	scanf_s("%ld", &n);
-	vector<int> result;
+	segments.push_back({ 1000000000 , 1000000000 });
+
+	scanf_s("%d", &n);
 	for (int i = 0; i < n; ++i) {
-		long point;
-		scanf_s("%ld", &point);
-		vector<Segment> points_lines;
-		for (int j = 0; j < lines.size(); ++j) {
-			if (in_line(lines[j], point))
-				points_lines.push_back(lines[j]);
+		int point;
+		scanf_s("%d", &point);
+		bool check = true;
+		while (check) {
+			if (stack.empty()) {
+				if (point < segments[cur_seg].x1) {
+					printf("-1\n");
+					check = false;
+				}
+				else if (point > segments[cur_seg].x2) {
+					++cur_seg;
+				}
+				else {
+					stack.push(cur_seg);
+					++cur_seg;
+				}
+			}
+			else {
+				if (point >= segments[stack.top()].x1 && point <= segments[stack.top()].x2) {
+					if (point >= segments[cur_seg].x1 && point <= segments[cur_seg].x2) {
+						stack.push(cur_seg);
+						++cur_seg;
+					}
+					else if (point < segments[cur_seg].x1) {
+						printf("%d\n", stack.top());
+						check = false;
+					}
+					else {
+						++cur_seg;
+					}
+				}
+				else if (point > segments[stack.top()].x2)
+					stack.pop();
+			}
 		}
-		Segment min_seg = { 0, MAXN };
-		for (int j = 0; j < points_lines.size(); ++j) {
-			if (points_lines[j].GetLength() < min_seg.GetLength())
-				min_seg = points_lines[j];
-		}
-		if (points_lines.size() == 0)
-			result.push_back(-1);
-		else
-			result.push_back(min_seg.pos);
 	}
-	for (int i = 0; i < result.size() - 1; ++i)
-		printf("%d\n", result[i]);
-	printf("%d", result[result.size() - 1]);
 	return 0;
 }
