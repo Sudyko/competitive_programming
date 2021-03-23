@@ -79,8 +79,10 @@ int main(){
             } 
             char* reverse = (char*)malloc(sizeof(char) * (len + 1));
             for (int i = len - 1; i >= 0; --i) reverse[len - i - 1] = str[i];
+            free(str);
             reverse[len] = '\0';
             printf("%s", reverse);
+            free(reverse);
         }
     }
     return 0;
