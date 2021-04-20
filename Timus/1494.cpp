@@ -1,34 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stack>
 
 using namespace std;
 
 int main() {
+	int n, rev, max = 0;
 	stack<int> nums;
 	nums.push(0);
-	bool check = true;
-	int n;
-	int max = 0;
-	scanf_s("%d", &n);
-	for (int i = 0; i < n; ++i) {
-		int rev;
-		scanf_s("%d", &rev);
-		if (rev < nums.top())
-			check = false;
-		else if (rev == nums.top())
-			nums.pop();
+	scanf("%d", &n);
+	for (; n > 0; --n) {
+		scanf("%d", &rev);
+		if (rev < nums.top()) break;
+		else if (rev == nums.top()) nums.pop();
 		else if (rev > max) {
-			for (int j = max + 1; j <= rev; ++j) {
-				nums.push(j);
-			}
+			for (int j = max + 1; j <= rev; ++j) nums.push(j);
 			max = rev;
 			nums.pop();
 		}
 	}
-	if (check)
-		printf("Not a proof");
-	else
-		printf("Cheater");
+	if (rev < nums.top()) puts("Cheater");
+	else puts("Not a proof");
 	return 0;
 }
