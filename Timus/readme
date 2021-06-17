@@ -15,6 +15,7 @@
 1184.2.c --- TIME [ 0.001 ] --- MEMORY [ 192 KB ]
 1220.cpp --- TIME [   X   ] --- MEMORY [   X   ]
   1297.c --- TIME [ 0.015 ] --- MEMORY [ 128 KB ]
+  1298.c --- TIME [ 0.001 ] --- MEMORY [ 132 KB ]
 1303.cpp --- TIME [ 0.046 ] --- MEMORY [ 932 KB ]
 1306.cpp --- TIME [ 0.187 ] --- MEMORY [ 380 KB ]
   1354.c --- TIME [ 0.015 ] --- MEMORY [ 144 KB ]
